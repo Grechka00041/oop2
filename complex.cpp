@@ -32,25 +32,66 @@ std::istream &operator>>(std::istream & in, TComplex &complex){
     in >> complex.re >> complex.im;
     return in;
 }
+TComplex TComplex:: operator+(TComplex &second) const {
+    return(re+second.re, im+second.im);
+}
+TComplex TComplex:: operator-(TComplex &second) const {
+    return(re-second.re, im-second.im);
+}
+
+TComplex TComplex:: operator*(TComplex &second) const{
+    double resRe, resIm;
+    resRe = re*second.re-im*second.im;
+    resIm = second.im*re + im*second.re;
+    return TComplex(resRe, resIm);
+}
+TComplex TComplex:: operator/(TComplex &second) const{
+    double resRe, resIm;
+    resRe = (re*second.re+im*second.im)/(pow(second.re,2) +pow(second.im,2));
+    resIm = (im*second.re-re*second.im)/(pow(second.re,2) +pow(second.im,2));
+    return TComplex(resRe, resIm);
+}
 TComplex TComplex:: operator+=(TComplex second) {
-    re += second.getRe();
-    im += second.getIm();
+    re += second.re;
+    im += second.im;
     return TComplex(re, im);
 
 }
-
-TComplex TComplex::operator/=(double second){
-    double a = (re * second)/(second * second);
-    double b = (second * im)/(second * second);
-    re = a;
-    im = b;
+TComplex TComplex:: operator-=(TComplex second){
+    re -= second.re;
+    im -= second.im;
     return TComplex(re, im);
 }
-
-TComplex TComplex:: operator-(TComplex second){
-    re -= second.getRe();
-    im -= second.getIm();
+TComplex TComplex::operator/=(TComplex second){
+    double resRe,resIm;
+    resRe = (re*second.re+im*second.im)/(pow(second.re,2) +pow(second.im,2));
+    resIm = (im*second.re-re*second.im)/(pow(second.re,2) +pow(second.im,2));
+    re = resRe;
+    im = resIm;
     return TComplex(re, im);
+}
+TComplex TComplex::operator*=(TComplex second){
+    double resRe, resIm;
+    resRe = re*second.re-im*second.im;
+    resIm = second.im*re + im*second.re;
+    re = resRe;
+    im = resIm;
+    return TComplex(re, im);
+}
+bool TComplex::operator==(TComplex &second) const {
+    if (re==second.re and im==second.im) {
+        return true;
+    }
+    return false;
+}
+bool TComplex::operator!=(TComplex &second) const {
+    if (re!=second.re or im!=second.im) {
+        return true;
+    }
+    return false;
+}
+TComplex TComplex::operator=(double &second){
+    return TComplex(second,0);
 }
 
 double TComplex::modulus(TComplex *complex) {
@@ -58,7 +99,7 @@ double TComplex::modulus(TComplex *complex) {
     double im = pow(complex->getIm(), 2);
     return pow(re + im, 0.5);
 }
-bool TComplex::operator<(TComplex second){
+bool TComplex::operator<(TComplex &second){
     if(modulus(this) < modulus(&second)) return true;
     if(modulus(this) == modulus(&second)){
         if(::atan(this->im/this->re) < atan(second.im/second.re)) return true;

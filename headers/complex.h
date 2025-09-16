@@ -16,12 +16,19 @@ class TComplex{
         int getRe();
         int getIm();
 
+        TComplex operator+(TComplex &second) const;
+        TComplex operator-(TComplex &second) const;
+        TComplex operator*(TComplex &second) const;
+        TComplex operator/(TComplex &second) const;
+        TComplex operator/=(TComplex second);
+        TComplex operator*=(TComplex second);
         TComplex operator+=(TComplex second);
-        TComplex operator/=(double second);
-        TComplex operator-(TComplex second);
-
+        TComplex operator-=(TComplex second);
+        bool operator==(TComplex &second) const;
+        bool operator!=(TComplex &second) const;
+        TComplex operator=(double &second);
         bool operator>(TComplex &second);
-        bool operator<(TComplex second);
+        bool operator<(TComplex &second);
         double modulus(TComplex *complex);
 
         friend std::istream& operator >> (std::istream & in, TComplex & c);
