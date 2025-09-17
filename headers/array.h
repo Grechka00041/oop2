@@ -17,7 +17,7 @@ public:
     number sko();
     void sortIncrease();
     void sortDecrease();
-    void changeElem(int index, int value);
+    void changeElem(int index);
 
 };
 

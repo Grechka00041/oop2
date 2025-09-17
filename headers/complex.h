@@ -7,14 +7,14 @@
 
 class TComplex{
     private:
-        int re;
-        int im;
+        double re;
+        double im;
     public:
         TComplex();
-        TComplex(int re, int im);
-        TComplex(int re);
-        int getRe();
-        int getIm();
+        TComplex(double re, double im);
+        TComplex(double re);
+        double getRe();
+        double getIm();
 
         TComplex operator+(TComplex &second) const;
         TComplex operator-(TComplex &second) const;

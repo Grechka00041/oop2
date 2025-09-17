@@ -87,10 +87,8 @@ int Application::exec() {
             array->printArray();
             cout << "Введите индекс элемента для изменения: ";
             cin >> index;
-            cout << "Введите новое значение: ";
-            cin >> value;
+            array->changeElem(index);
             cout << "Измененный массив: ";
-            array->changeElem(index, value);
             array->printArray();
             break;
         }

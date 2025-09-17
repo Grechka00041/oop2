@@ -10,21 +10,21 @@ TComplex:: TComplex(){
     im = re = 0;
 }
 
-TComplex:: TComplex(int re){
+TComplex:: TComplex(double re){
     this->re = re;
     im = 0;
 }
 
-TComplex:: TComplex(int re, int im){
+TComplex:: TComplex(double re, double im){
     this->re = re;
     this->im = im;
 }
 
-int TComplex:: getRe(){
+double TComplex:: getRe(){
     return this->re;
 }
 
-int TComplex:: getIm(){
+double TComplex:: getIm(){
     return this->im;
 }
 

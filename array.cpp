@@ -86,8 +86,9 @@ void Array::sortDecrease() {
     }
 }
 
-void Array::changeElem(int index, int value) {
+void Array::changeElem(int index) {
     if (index <= length && index >= 0) {
-        array[index] = value;
+        cout << "Введите новое значение: ";
+        cin >> array[index];
     }
 }
