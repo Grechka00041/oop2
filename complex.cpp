@@ -132,13 +132,17 @@ std::ostream &operator<<(std::ostream &os, const TComplex &complex){
 
 TComplex pow(TComplex complex, double n){
     double argZ;
-    if(complex.re > 0) argZ = atan(complex.im / complex.re);
-    else if(complex.re < 0 && complex.im >= 0) argZ = 3.14 - atan(complex.im / complex.re);
-    else if(complex.re < 0 && complex.im < 0) argZ = -3.14 + atan(complex.im / complex.re);
-    else if(complex.re == 0 && complex.im > 0) argZ = 3.14/2;
-    else argZ = -3.14/2;
+    if(complex.re > 0) {
+        argZ = atan(complex.im / complex.re);
+    } else if(complex.re < 0 && complex.im >= 0) {
+        argZ = 3.14 - atan(complex.im / complex.re);
+    }else if(complex.re < 0 && complex.im < 0) {
+        argZ = -3.14 + atan(complex.im / complex.re);
+    } else if(complex.re == 0 && complex.im > 0) {
+        argZ = 3.14/2;
+    } else argZ = -3.14/2;
     return TComplex(std::pow(complex.modulus(&complex), n) * cos(argZ * n),
-                    std::pow(complex.modulus(&complex), n) * sin(argZ * n));
+        std::pow(complex.modulus(&complex), n) * sin(argZ * n));
 }
 
 
