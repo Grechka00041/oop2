@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-//using namespace std;
-
 class TComplex{
     private:
         double re;
@@ -13,20 +11,11 @@ class TComplex{
         TComplex();
         TComplex(double re, double im);
         TComplex(double re);
-        double getRe();
-        double getIm();
 
-        TComplex operator+(TComplex &second) const;
+
         TComplex operator-(TComplex &second) const;
-        TComplex operator*(TComplex &second) const;
-        TComplex operator/(TComplex &second) const;
         TComplex operator/=(TComplex second);
-        TComplex operator*=(TComplex second);
         TComplex operator+=(TComplex second);
-        TComplex operator-=(TComplex second);
-        bool operator==(TComplex &second) const;
-        bool operator!=(TComplex &second) const;
-        TComplex operator=(double &second);
         bool operator>(TComplex &second);
         bool operator<(TComplex &second);
         double modulus(TComplex *complex);

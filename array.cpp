@@ -36,7 +36,7 @@ int Array::changeLength(int new_length) {
         cin >> array[i];
     }
     length = new_length;
-    return length;//leak of memory
+    return length;
 }
 
 void Array::printArray() {
