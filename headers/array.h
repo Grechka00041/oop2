@@ -13,8 +13,8 @@ public:
     int changeLength(int new_length);
     void add();
     void printArray();
-    number average();
-    number sko();
+    double average();
+    double sko();
     void sortIncrease();
     void sortDecrease();
     void changeElem(int index);

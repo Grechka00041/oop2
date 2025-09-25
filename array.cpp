@@ -1,4 +1,6 @@
 #include "headers/array.h"
+
+#include <cmath>
 #include <iostream>
 #include "headers/complex.h"
 #include "headers/number.h"
@@ -45,22 +47,22 @@ void Array::printArray() {
     }
     cout << "\n";
 }
-number Array::average() {
-    number summa = 0;
+double Array::average() {
+    double summa = 0;
     if (length != 0) {
         for (int i = 0; i < length; i++) {
-            summa += array[i];
+            summa += array[i].getRe();
         }
         summa /= length;
     }
     return summa;
 }
-number Array::sko() {
-    number result = 0;
-    number average = 1;
+double Array::sko() {
+    double result = 0;
+    double average = 1;
     if (length != 0) {
         for (int i = 0; i < length; i++) {
-            result += pow((array[i]-average),2);
+            result += pow((array[i].getRe()-average),2);
         }
         result /= (length-1);
         result = pow(result, 0.5);
