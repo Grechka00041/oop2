@@ -15,7 +15,6 @@ public:
     Polynom();
     Polynom(int n, number an_value);
     Polynom(int n, number an_value, Array& roots_array);
-    //*~Polynom();
     //гетры
     int getDegree();
     number getCoefficient(int index);
@@ -25,6 +24,9 @@ public:
     void outputForm1(std::ostream& out);
     void outputForm2(std::ostream& out);
     number findNumberInPoint(number x);
+    void resize(int new_degree);
+    void setAn(number new_an);
+    void setRoot(int index, number new_root);
 };
 
 

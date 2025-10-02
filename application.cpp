@@ -22,10 +22,13 @@ void Application::menuPolynom() {
     cout << "МЕНЮ РАБОТЫ С ПОЛИНОМОМ" << endl;
     cout << "1 - Создать полином 0-й степени" << endl;
     cout << "2 - Ввести полином n-й степени" << endl;
-    cout << "3 - Вывести полином в форме 1 (anx^n + ... + a0)" << endl;
-    cout << "4 - Вывести полином в форме 2 (an(x-rn)...(x-r1))" << endl;
-    cout << "5 - Вычислить значение полинома в точке" << endl;
-    cout << "6 - Выход" << endl;
+    cout << "3 - Изменить коэффициент an" << endl;
+    cout << "4 - Изменить корень по индексу" << endl;
+    cout << "5 - Изменить размерность полинома" << endl;
+    cout << "6 - Вывести полином в форме 1 (anx^n + ... + a0)" << endl;
+    cout << "7 - Вывести полином в форме 2 (an(x-rn)...(x-r1))" << endl;
+    cout << "8 - Вычислить значение полинома в точке" << endl;
+    cout << "9 - Выход" << endl;
 }
 int Application::polynomExec() {
     int option;
@@ -49,18 +52,45 @@ int Application::polynomExec() {
                 break;
             }
             case 3: {
+                number new_an;
+                cout << "Введите новый коэффициент an: ";
+                cin >> new_an;
+                polynom->setAn(new_an);
+                cout << "Коэффициент an успешно изменен" << endl;
+                break;
+            }
+            case 4: {
+                int index;
+                number new_root;
+                cout << "Введите индекс корня для изменения (0-" << polynom->getDegree()-1 << "): ";
+                cin >> index;
+                cout << "Введите новое значение корня: ";
+                cin >> new_root;
+                polynom->setRoot(index, new_root);
+                cout << "Корень успешно изменен" << endl;
+                break;
+            }
+            case 5: {
+                int new_degree;
+                cout << "Введите новую степень полинома: ";
+                cin >> new_degree;
+                polynom->resize(new_degree);
+                cout << "Размерность полинома изменена" << endl;
+                break;
+            }
+            case 6: {
                 cout << "Полином в форме 1: ";
                 polynom->outputForm1(cout);
                 cout << endl;
                 break;
             }
-            case 4: {
+            case 7: {
                 cout << "Полином в форме 2: ";
                 polynom->outputForm2(cout);
                 cout << endl;
                 break;
             }
-            case 5: {
+            case 8: {
                 number x, result;
                 cout << "Введите точку x для вычисления: ";
                 cin >> x;
@@ -68,7 +98,7 @@ int Application::polynomExec() {
                 cout << "Значение полинома в точке " << x << " равно: " << result << endl;
                 break;
             }
-            case 6: {
+            case 9: {
                 delete polynom;
                 allMenu();
             }

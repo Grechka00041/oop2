@@ -172,6 +172,28 @@ void Polynom::outputForm1(std::ostream& out) {
         out << "0";
     }
 }
+void Polynom::resize(int new_degree) {
+    if (new_degree < 0) return;
+
+    Array* new_roots = new Array(new_degree);
+
+    int min_degree = (degree < new_degree) ? degree : new_degree;
+    for (int i = 0; i < min_degree; i++) {
+        new_roots->changeElem(i, roots->findElem(i));
+    }
+    for (int i = degree; i < new_degree; i++) {
+        new_roots->changeElem(i, number(0,0));
+    }
+
+    delete roots;
+    roots = new_roots;
+    degree = new_degree;
+
+    delete coefficients;
+    coefficients = new Array(degree + 1);
+
+    calculateCoefficients();
+}
 //p(x) = an(x-rn)(x-rn-1) ... (x-r1)
 void Polynom::outputForm2(std::ostream& out) {
     out << an;
@@ -211,4 +233,15 @@ number Polynom::findNumberInPoint(number x) {
     }
 
     return result;
+}
+void Polynom::setAn(number new_an) {
+    an = new_an;
+    calculateCoefficients();
+}
+
+void Polynom::setRoot(int index, number new_root) {
+    if (index >= 0 && index < degree) {
+        roots->changeElem(index, new_root);
+        calculateCoefficients();
+    }
 }
