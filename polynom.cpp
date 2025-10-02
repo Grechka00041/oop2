@@ -118,42 +118,56 @@ void Polynom::input(std::istream& in) {
 }
 //p(x) = anxn + an-1xn-1 + ... + a1x + a0
 void Polynom::outputForm1(std::ostream& out) {
-    bool firstItem = false;
-    for (int i =degree; i>=0; i--) {
+    bool firstItem = true;
+
+    for (int i = degree; i >= 0; i--) {
         number coeff = coefficients->findElem(i);
+
+        // Пропускаем нулевые коэффициенты
         if (coeff.getRe() == 0 && coeff.getIm() == 0) {
             continue;
         }
+
+        // Добавляем знак для не первого члена
         if (!firstItem) {
             if (coeff.getRe() > 0 || (coeff.getRe() == 0 && coeff.getIm() > 0)) {
                 out << " + ";
             } else {
                 out << " - ";
+                // Делаем коэффициент положительным для вывода после знака "-"
+                coeff = number(-coeff.getRe(), -coeff.getIm());
             }
-            if (i == 0) {
+        }
+
+        // Выводим коэффициент
+        if (i == 0) {
+            out << coeff;
+        } else {
+            // Проверяем, нужно ли выводить коэффициент
+            bool isOne = (coeff.getRe() == 1.0 && coeff.getIm() == 0.0);
+            bool isMinusOne = (coeff.getRe() == -1.0 && coeff.getIm() == 0.0);
+
+            if (!isOne && !isMinusOne) {
                 out << coeff;
-            } else {
-                if (!(coeff.getRe() == 1 && coeff.getIm() == 0)) {
-                    if (!(coeff.getRe() == -1 && coeff.getIm() == 0)) {
-                        out << coeff;
-                        if (i > 0) {
-                            out << "*";
-                        }
-                    } else if (i > 0) {
-                        out << "-";
-                    }
+                if (i > 0) {
+                    out << "*";
                 }
+            } else if (isMinusOne && firstItem) {
+                out << "-";
             }
 
-                if (i > 0) {
-                    out << "x";
-                    if (i > 1) {
-                        out << "^" << i;
-                    }
+            // Выводим x со степенью
+            if (i > 0) {
+                out << "x";
+                if (i > 1) {
+                    out << "^" << i;
                 }
             }
-            firstItem = false;
         }
+
+        firstItem = false;
+    }
+
     if (firstItem) {
         out << "0";
     }

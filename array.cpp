@@ -104,4 +104,5 @@ number Array::findElem(int index) {
     if (index >= 0 && index < length) {
         return array[index];
     }
+    return number(0,0);
 }

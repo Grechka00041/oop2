@@ -6,6 +6,7 @@
 
 class Application {
 public:
+    Array* globalArray;
     Application();
     int exec();
     int allMenu();
