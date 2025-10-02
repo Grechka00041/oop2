@@ -94,3 +94,14 @@ void Array::changeElem(int index) {
         cin >> array[index];
     }
 }
+
+void Array::changeElem(int index, number value) {
+    if (index >= 0 && index < length) {
+        array[index] = value;
+    }
+}
+number Array::findElem(int index) {
+    if (index >= 0 && index < length) {
+        return array[index];
+    }
+}

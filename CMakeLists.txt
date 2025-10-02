@@ -13,4 +13,6 @@ add_executable(oop2
         application.cpp
         array.cpp
         complex.cpp
-        main.cpp)
+        main.cpp
+        polynom.cpp
+        headers/polynom.h)

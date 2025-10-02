@@ -1,6 +1,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 #include "number.h"
+#include "number.h"
 
 class Array{
 private:
@@ -18,7 +19,8 @@ public:
     void sortIncrease();
     void sortDecrease();
     void changeElem(int index);
-
+    void changeElem(int index, number value);
+    number findElem(int index);
 };
 
 #endif // ARRAY_H

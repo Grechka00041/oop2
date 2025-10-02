@@ -4,6 +4,6 @@
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     Application application = Application();
-    application.exec();
+    application.allMenu();
     return 0;
 }

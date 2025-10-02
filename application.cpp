@@ -1,13 +1,13 @@
 #include "headers/application.h"
-
+#include "headers/polynom.h"
 #include "iostream"
 
 using namespace std;
 Application::Application() {
-
 }
 
 void Application::menu() {
+    cout << "МЕНЮ РАБОТЫ С МАССИВОМ" << endl;
     cout << "1 - Создать массив заданной длины" << endl;
     cout << "2 - Заполнить массив" << endl;
     cout << "3 - Изменить размерность массива" << endl;
@@ -17,6 +17,87 @@ void Application::menu() {
     cout << "7 - Сортировать по убыванию" << endl;
     cout << "8 - Изменить значение выбранного элемента массива" << endl;
     cout << "9 - Выход" << endl;
+}
+void Application::menuPolynom() {
+    cout << "МЕНЮ РАБОТЫ С ПОЛИНОМОМ" << endl;
+    cout << "1 - Создать полином 0-й степени" << endl;
+    cout << "2 - Ввести полином n-й степени" << endl;
+    cout << "3 - Вывести полином в форме 1 (anx^n + ... + a0)" << endl;
+    cout << "4 - Вывести полином в форме 2 (an(x-rn)...(x-r1))" << endl;
+    cout << "5 - Вычислить значение полинома в точке" << endl;
+    cout << "6 - Выход" << endl;
+}
+int Application::polynomExec() {
+    int option;
+    Polynom* polynom = new Polynom(); // Полином по умолчанию
+
+    while (true) {
+        menuPolynom();
+        cout << "Выберите вариант: ";
+        cin >> option;
+
+        switch (option) {
+            case 1: {
+                delete polynom;
+                polynom = new Polynom();
+                cout << "Создан полином по умолчанию (нулевой степени)" << endl;
+                break;
+            }
+            case 2: {
+                polynom->input(cin);
+                cout << "Полином успешно введен" << endl;
+                break;
+            }
+            case 3: {
+                cout << "Полином в форме 1: ";
+                polynom->outputForm1(cout);
+                cout << endl;
+                break;
+            }
+            case 4: {
+                cout << "Полином в форме 2: ";
+                polynom->outputForm2(cout);
+                cout << endl;
+                break;
+            }
+            case 5: {
+                number x, result;
+                cout << "Введите точку x для вычисления: ";
+                cin >> x;
+                result = polynom->findNumberInPoint(x);
+                cout << "Значение полинома в точке " << x << " равно: " << result << endl;
+                break;
+            }
+            case 6: {
+                delete polynom;
+                allMenu();
+            }
+            default: {
+                cout << "Введите корректное значение" << endl;
+            }
+        }
+    }
+}
+int Application::allMenu() {
+    int option;
+    while (true) {
+        cout << "1 - действия с массивом"<< endl;
+        cout << "2 - действия с полиномом"<< endl;
+        cin >> option;
+        switch (option) {
+            case 1:
+                {
+                exec();
+                break;
+            }
+            case 2: {
+                polynomExec();
+                break;
+            }
+
+
+        }
+    }
 }
 
 int Application::exec() {

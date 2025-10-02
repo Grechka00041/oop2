@@ -8,8 +8,11 @@ class Application {
 public:
     Application();
     int exec();
+    int allMenu();
+    int polynomExec();
 private:
     void menu();
+    void menuPolynom();
 };
 
 #endif // APPLICATION_H

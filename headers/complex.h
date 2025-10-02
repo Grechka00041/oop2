@@ -12,11 +12,14 @@ class TComplex{
         TComplex(double re, double im);
         TComplex(double re);
         double getRe();
+        double getIm();
 
         TComplex operator-(TComplex &second) const;
+        TComplex operator+(TComplex &second) const;
         TComplex operator/=(TComplex second);
         TComplex operator+=(TComplex second);
-        //TComplex operator+=(double second);
+        TComplex operator*(TComplex &second) const;
+        TComplex& operator=(const TComplex &other);
         bool operator>(TComplex &second);
         bool operator<(TComplex &second);
         double modulus(TComplex *complex);
@@ -25,4 +28,4 @@ class TComplex{
         friend std::ostream& operator << (std::ostream & os, const TComplex & c);
         friend TComplex pow(TComplex complex, double n);
 };
-#endif COMPLEX_H
+#endif

@@ -28,10 +28,15 @@ std::istream &operator>>(istream & in, TComplex &num){
 double TComplex:: getRe(){
     return this->re;
 }
+double TComplex::getIm(){
+    return this->im;
+}
 TComplex TComplex:: operator-(TComplex &num) const {
     return(re-num.re, im-num.im);
 }
-
+TComplex TComplex:: operator+(TComplex &num) const {
+    return(re+num.re, im+num.im);
+}
 TComplex TComplex:: operator+=(TComplex num) {
     re += num.re;
     im += num.im;
@@ -47,7 +52,21 @@ TComplex TComplex::operator/=(TComplex num){
     im = resIm;
     return TComplex(re, im);
 }
+TComplex TComplex::operator*(TComplex &num) const {
+    double resRe;
+    double resIm;
+    resRe = re * num.re - im * num.im;
+    resIm = re * num.im + im * num.re;
+    return TComplex(resRe, resIm);
+}
 
+TComplex& TComplex::operator=(const TComplex &other) {
+    if (this != &other) {
+        re = other.re;
+        im = other.im;
+    }
+    return *this;
+}
 double TComplex::modulus(TComplex *complex) {
     double re, im;
     re = pow(complex->re,2);
