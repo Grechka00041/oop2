@@ -100,9 +100,14 @@ void Array::changeElem(int index, number value) {
         array[index] = value;
     }
 }
+
 number Array::findElem(int index) {
     if (index >= 0 && index < length) {
         return array[index];
     }
     return number(0,0);
+}
+
+int Array::getLength() const {
+    return length;
 }

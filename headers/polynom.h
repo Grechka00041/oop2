@@ -27,6 +27,7 @@ public:
     void resize(int new_degree);
     void setAn(number new_an);
     void setRoot(int index, number new_root);
+    void setRootsFromArray(Array& sourceArray, int startIndex = 0);
 };
 
 

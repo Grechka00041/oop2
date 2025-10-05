@@ -11,6 +11,7 @@ public:
     Array(int length = 0);
     void fill(int n);
     ~Array();
+    int getLength() const;
     int changeLength(int new_length);
     void add();
     void printArray();

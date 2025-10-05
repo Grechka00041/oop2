@@ -12,6 +12,7 @@ public:
     int allMenu();
     int polynomExec();
 private:
+    Array* currentArray;
     void menu();
     void menuPolynom();
 };

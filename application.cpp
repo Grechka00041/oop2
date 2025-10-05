@@ -4,6 +4,7 @@
 
 using namespace std;
 Application::Application() {
+    currentArray = nullptr;
 }
 
 void Application::menu() {
@@ -28,7 +29,8 @@ void Application::menuPolynom() {
     cout << "6 - Вывести полином в форме 1 (anx^n + ... + a0)" << endl;
     cout << "7 - Вывести полином в форме 2 (an(x-rn)...(x-r1))" << endl;
     cout << "8 - Вычислить значение полинома в точке" << endl;
-    cout << "9 - Выход" << endl;
+    cout << "9 - Установить корни из массива" << endl;
+    cout << "10 - Выход" << endl;
 }
 int Application::polynomExec() {
     int option;
@@ -48,7 +50,6 @@ int Application::polynomExec() {
             }
             case 2: {
                 polynom->input(cin);
-                cout << "Полином успешно введен" << endl;
                 break;
             }
             case 3: {
@@ -99,8 +100,21 @@ int Application::polynomExec() {
                 break;
             }
             case 9: {
+                if (currentArray != nullptr && currentArray->getLength() > 0) {
+                    int startIndex;
+                    cout << "Текущий массив: ";
+                    currentArray->printArray();
+                    cout << "Введите начальный индекс в массиве (0-" << currentArray->getLength()-1 << "): ";
+                    cin >> startIndex;
+                    polynom->setRootsFromArray(*currentArray, startIndex);
+                } else {
+                    cout << "Сначала создайте и заполните массив в меню для массива!" << endl;
+                }
+                break;
+            }
+            case 10: {
                 delete polynom;
-                allMenu();
+                return 0;
             }
             default: {
                 cout << "Введите корректное значение" << endl;
@@ -132,7 +146,10 @@ int Application::allMenu() {
 
 int Application::exec() {
     int option, length;
-    Array* array = new Array();
+    if (currentArray == nullptr) {
+        currentArray = new Array();
+    }
+
     while (true) {
         menu();
         cout << "Выберите вариант: " << endl;
@@ -141,66 +158,71 @@ int Application::exec() {
         switch (option) {
         case 1:
         {
-            cout << "Введите длину массива" << endl;
+            cout << "Введите длину массива: ";
             cin >> length;
-            array = new Array(length);
+            delete currentArray;
+            currentArray = new Array(length);
+            cout << "Массив создан с длиной: " << length << endl;
             break;
         }
         case 2:
         {
-            cout << "Введите элементы для заполнения массива";
-            array->add();
+            if (currentArray->getLength() == 0) {
+                cout << "Сначала создайте массив (пункт 1)!" << endl;
+            } else {
+                cout << "Введите " << currentArray->getLength() << " элементов для заполнения массива: ";
+                currentArray->add();
+            }
             break;
         }
         case 3:
         {
-            cout << "Введите новую длину массива";
+            cout << "Введите новую длину массива: ";
             cin >> length;
-            length = array->changeLength(length);
-            cout << length;
+            currentArray->changeLength(length);
+            cout << "Новая длина массива: " << currentArray->getLength() << endl;
             break;
         }
         case 4:
         {
             cout << "Ваш массив: ";
-            array->printArray();
-            cout << "\n";
+            currentArray->printArray();
             break;
         }
         case 5:
         {
-            cout << "Среднее значение: " << array->average() << ", ";
-            cout << "СКО: " << array->sko() << endl;
+            cout << "Среднее значение: " << currentArray->average() << ", ";
+            cout << "СКО: " << currentArray->sko() << endl;
             break;
         }
         case 6:
         {
             cout << "Исходный массив: ";
-            array->printArray();
+            currentArray->printArray();
             cout << "Отсортированный по возрастанию: ";
-            array->sortIncrease();
-            array->printArray();
+            currentArray->sortIncrease();
+            currentArray->printArray();
             break;
         }
-            case 7:
+        case 7:
         {
             cout << "Исходный массив: ";
-            array->printArray();
+            currentArray->printArray();
             cout << "Отсортированный по убыванию: ";
-            array->sortDecrease();
-            array->printArray();
+            currentArray->sortDecrease();
+            currentArray->printArray();
             break;
         }
         case 8:
         {
-            int index, value;
+            int index;
             cout << "Исходный массив: ";
-            array->printArray();
-            cout << "Введите индекс элемента для изменения: ";
+            currentArray->printArray();
+            cout << "Введите индекс элемента для изменения (0-" << currentArray->getLength()-1 << "): ";
             cin >> index;
-            array->changeElem(index);
+            currentArray->changeElem(index);
             cout << "Измененный массив: ";
-            array->printArray();
+            currentArray->printArray();
             break;
         }
         case 9:
@@ -209,7 +231,7 @@ int Application::exec() {
         }
         default:
         {
-            cout << "Введите корректное значение";
+            cout << "Введите корректное значение" << endl;
         }
         }
     }

@@ -8,7 +8,7 @@ using namespace std;
 
 Polynom::Polynom() {
     degree = 0;
-    an = number(1,0);
+    an = number(0,0);
     roots = new Array(degree);
     coefficients = new Array(degree+1);
 }
@@ -105,9 +105,9 @@ void Polynom::input(std::istream& in) {
     roots = new Array(degree);
     coefficients = new Array(degree + 1);
     if (degree > 0) {
-        cout << "Введите " << degree << " корней полинома:" << endl;
+        cout << "Введите " << degree << " корней полинома: " << endl;
         for (int i = 0; i<degree; i++) {
-            cout << "Корень номер"<< i+1<<endl;
+            cout << "Корень номер "<< i+1<<endl;
             number root;
             in >> root;
             roots->changeElem(i,root);
@@ -123,54 +123,63 @@ void Polynom::outputForm1(std::ostream& out) {
     for (int i = degree; i >= 0; i--) {
         number coeff = coefficients->findElem(i);
 
-        // Пропускаем нулевые коэффициенты
         if (coeff.getRe() == 0 && coeff.getIm() == 0) {
             continue;
         }
-
-        // Добавляем знак для не первого члена
-        if (!firstItem) {
-            if (coeff.getRe() > 0 || (coeff.getRe() == 0 && coeff.getIm() > 0)) {
-                out << " + ";
-            } else {
-                out << " - ";
-                // Делаем коэффициент положительным для вывода после знака "-"
-                coeff = number(-coeff.getRe(), -coeff.getIm());
-            }
-        }
-
-        // Выводим коэффициент
-        if (i == 0) {
-            out << coeff;
-        } else {
-            // Проверяем, нужно ли выводить коэффициент
-            bool isOne = (coeff.getRe() == 1.0 && coeff.getIm() == 0.0);
-            bool isMinusOne = (coeff.getRe() == -1.0 && coeff.getIm() == 0.0);
-
-            if (!isOne && !isMinusOne) {
-                out << coeff;
-                if (i > 0) {
-                    out << "*";
+        if (coeff.getRe() != 0) {
+            if (!firstItem) {
+                if (coeff.getRe() > 0) {
+                    out << " + ";
+                } else {
+                    out << " - ";
                 }
-            } else if (isMinusOne && firstItem) {
+            } else if (coeff.getRe() < 0) {
                 out << "-";
             }
-
-            // Выводим x со степенью
-            if (i > 0) {
+            double absRe = abs(coeff.getRe());
+            if (i == 0) {
+                out << absRe;
+            } else {
+                if (absRe != 1.0) {
+                    out << absRe;
+                }
                 out << "x";
                 if (i > 1) {
                     out << "^" << i;
                 }
             }
+            firstItem = false;
         }
-
-        firstItem = false;
+        if (coeff.getIm() != 0) {
+            if (!firstItem) {
+                if (coeff.getIm() > 0) {
+                    out << " + ";
+                } else {
+                    out << " - ";
+                }
+            } else if (coeff.getIm() < 0) {
+                out << "-";
+            }
+            double absIm = abs(coeff.getIm());
+            if (i == 0) {
+                out << absIm << "i";
+            } else {
+                if (absIm != 1.0) {
+                    out << absIm;
+                }
+                out << "i*x";
+                if (i > 1) {
+                    out << "^" << i;
+                }
+            }
+            firstItem = false;
+        }
     }
 
     if (firstItem) {
         out << "0";
     }
+
 }
 void Polynom::resize(int new_degree) {
     if (new_degree < 0) return;
@@ -196,7 +205,7 @@ void Polynom::resize(int new_degree) {
 }
 //p(x) = an(x-rn)(x-rn-1) ... (x-r1)
 void Polynom::outputForm2(std::ostream& out) {
-    out << an;
+    out << "(" << an << ")";
     for (int i = 0; i < degree; i++) {
         number root = roots->findElem(i);
         out << "(x";
@@ -244,4 +253,27 @@ void Polynom::setRoot(int index, number new_root) {
         roots->changeElem(index, new_root);
         calculateCoefficients();
     }
+}
+
+
+void Polynom::setRootsFromArray(Array& sourceArray, int startIndex) {
+    if (startIndex < 0 || startIndex >= sourceArray.getLength()) {
+        cout << "Неверный начальный индекс" << endl;
+        return;
+    }
+
+    int availableRoots = sourceArray.getLength() - startIndex;
+    if (availableRoots < degree) {
+        cout << "В массиве недостаточно элементов для всех корней. Нужно: " << degree
+             << ", доступно: " << availableRoots << endl;
+        return;
+    }
+
+    for (int i = 0; i < degree; i++) {
+        number root = sourceArray.findElem(startIndex + i);
+        roots->changeElem(i, root);
+    }
+
+    calculateCoefficients();
+    cout << "Корни полинома успешно установлены из массива!" << endl;
 }
