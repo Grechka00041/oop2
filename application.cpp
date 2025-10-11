@@ -127,6 +127,7 @@ int Application::allMenu() {
     while (true) {
         cout << "1 - действия с массивом"<< endl;
         cout << "2 - действия с полиномом"<< endl;
+        cout << "3 - выход"<< endl;
         cin >> option;
         switch (option) {
             case 1:
@@ -138,8 +139,8 @@ int Application::allMenu() {
                 polynomExec();
                 break;
             }
-
-
+            case 3:
+                return 0;
         }
     }
 }
